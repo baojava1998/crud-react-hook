@@ -1,6 +1,9 @@
-import Header from "../layouts/Header";
-
+import { Link } from "react-router-dom";
 function Index() {
+    const list = [];
+    for (let i = 1; i < 10; i++) {
+        list.push(i);
+    }
     return (
         <div className="row">
             <div className="col-lg-12">
@@ -15,72 +18,31 @@ function Index() {
                         <table className="table mb-0 table-bordered">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Column heading</th>
-                                <th>Column heading</th>
-                                <th>Column heading</th>
+                                <th>STT</th>
+                                <th>NAME</th>
+                                <th>DETAIL</th>
+                                <th>ACTION</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr className="table-active">
-                                <th scope="row">1</th>
+                            {list.map((number) =>
+                            <tr className="table table-bordered mb-0" key={number.toString()}>
+                                <th scope="row">{number}</th>
                                 <td>Column content</td>
                                 <td>Column content</td>
-                                <td>Column content</td>
+                                <td>
+                                    <Link to={`contact/`+ number}><button type="button" className="btn btn-info waves-effect waves-light">Edit</button>{' '}</Link>
+                                    <button type="button" className="btn btn-danger waves-effect waves-light">Delete</button>
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr className="table-success">
-                                <th scope="row">3</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr className="table-info">
-                                <th scope="row">5</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr className="table-warning">
-                                <th scope="row">7</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-                            <tr className="table-danger">
-                                <th scope="row">9</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
+                            )}
                             </tbody>
                         </table>
                     </div>
                 </div>
-
+                {/*<Routes>*/}
+                {/*    <Route path="/" element={<Index/>} />*/}
+                {/*</Routes>*/}
             </div>
         </div>
     );

@@ -1,8 +1,8 @@
 import './App.css';
 import Header from "./components/layouts/Header";
 import Sidebar from "./components/layouts/Sidebar";
-import Index from "./components/products/Index";
-
+import { Outlet } from "react-router-dom";
+import React from "react";
 function App() {
   return (
       <div id={'wrapper'}>
@@ -11,7 +11,7 @@ function App() {
           <div className="content-page">
               <div className="content">
                   <div className="container-fluid">
-                      <Index/>
+                      <Outlet />
                   </div>
               </div>
           </div>
