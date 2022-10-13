@@ -4,6 +4,7 @@ import Index from "../components/products/Index";
 import Contact from "../components/products/Contact";
 import Create from "../components/products/Create";
 import Edit from "../components/products/Edit";
+import Login from "../components/layouts/Login";
 
 const Router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const Router = createBrowserRouter([
             },
         ],
     },
+    {
+        path: "/login",
+        element: <Login/>,
+    }
 ]);
 
 export default Router;
