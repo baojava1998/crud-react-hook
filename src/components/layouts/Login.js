@@ -1,7 +1,32 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import { Field } from "formik";
+import FormErrors from "../FormErrors";
+import {useEffect, useRef, useState} from "react";
+import { Formik, Form as FormMik } from "formik";
+import http from "../../http-common";
+import cookies from "react-cookies";
 
 function Login() {
     document.body.classList.add('authentication-bg');
+    let navigate = useNavigate();
+    const initError = {
+        "email":"",
+        "password" :""
+    }
+    const [errors, setErrors] = useState(initError)
+
+    function submitLogin(data)
+    {
+        http.post('login', data)
+            .then(result => {
+                cookies.save('access_token', result.data.token)
+                navigate('/products')
+            })
+            .catch(err => {
+                setErrors(err.response.data.errors)
+            })
+    }
+
     return (
         <div className="account-pages pt-5 my-5">
             <div className="container">
@@ -20,39 +45,44 @@ function Login() {
                                         <h5 className="text-muted text-uppercase py-3 font-16">Sign In</h5>
                                     </div>
 
-                                    <form action="#" className="mt-2">
+                                    <Formik initialValues={{}} onSubmit={async (values) => {
+                                                await submitLogin(values)
+                                            }}
+                                    >
+                                        <FormMik>
 
                                         <div className="form-group mb-3">
-                                            <input className="form-control" type="text" required=""
-                                                   placeholder="Enter your username"/>
+                                            <Field name="email" className='form-control' type="text" placeholder={'email'}/>
+                                            {errors ? <FormErrors errors={errors.email}/> : ''}
                                         </div>
 
                                         <div className="form-group mb-3">
-                                            <input className="form-control" type="password" required="" id="password"
-                                                   placeholder="Enter your password"/>
+                                            <Field name="password" className='form-control' type="password" placeholder={'password'}/>
+                                            {errors ? <FormErrors errors={errors.password}/> : ''}
                                         </div>
 
-                                        <div className="form-group mb-3">
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="checkbox" className="custom-control-input"
-                                                       id="checkbox-signin" checked=""/>
-                                                    <label className="custom-control-label" htmlFor="checkbox-signin">Remember
-                                                        me</label>
-                                            </div>
-                                        </div>
+                                        {/*<div className="form-group mb-3">*/}
+                                        {/*    <div className="custom-control custom-checkbox">*/}
+                                        {/*        <input type="checkbox" className="custom-control-input"*/}
+                                        {/*               id="checkbox-signin" checked=""/>*/}
+                                        {/*            <label className="custom-control-label" htmlFor="checkbox-signin">Remember*/}
+                                        {/*                me</label>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
 
                                         <div className="form-group text-center">
-                                            <Link to={'/products'}>
+                                            {/*<Link to={'/products'}>*/}
                                             <button className="btn btn-success btn-block waves-effect waves-light"
                                                     type="submit"> Log In
                                             </button>
-                                            </Link>
+                                            {/*</Link>*/}
                                         </div>
 
                                         <a href="pages-recoverpw.html" className="text-muted"><i
                                             className="mdi mdi-lock mr-1"></i> Forgot your password?</a>
 
-                                    </form>
+                                        </FormMik>
+                                    </Formik>
 
                                     <div className="text-center mt-4">
                                         <h5 className="text-muted py-2"><b>Sign in with</b></h5>

@@ -3,6 +3,7 @@ import { Link , useNavigate } from "react-router-dom";
 import ProductService from "../../services/ProductService";
 import ReactPaginate from 'react-paginate';
 import Swal from "sweetalert2";
+window.$ = window.jQuery = require('jquery');
 
 function Index() {
     let navigate = useNavigate();
